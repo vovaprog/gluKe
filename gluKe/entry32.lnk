@@ -1,0 +1,39 @@
+
+OUTPUT_FORMAT(binary)
+SECTIONS
+{
+	. = 0x30100;
+	.text : { ./output/entry32/entry32_s.o(.text) }
+	.text : { ./output/entry32/entry32_c.o(.text) }
+	.text : { ./output/entry32/int_c.o(.text) }
+	.text : { ./output/entry32/int_s.o(.text) }
+	.text : { ./output/entry32/rgn.o(.text) }
+	.text : { ./output/entry32/sys_utils.o(.text) }
+	.text : { ./output/entry32/file.o(.text) }
+	.text : { ./output/entry32/utils_s.o(.text) }
+	.text : { ./output/entry32/utils.o(.text) }
+	.text : { ./output/entry32/task.o(.text) }
+	.text : { ./output/entry32/plan.o(.text) }
+	.text : { ./output/entry32/handle.o(.text) }
+	.text : { ./output/entry32/work.o(.text) }
+	.text : { ./output/entry32/term.o(.text) }
+	.text : { ./output/entry32/mutex.o(.text) }
+	.text : { ./output/entry32/counter.o(.text) }
+	.text : { ./output/entry32/reverse.o(.text) }
+	.text : { ./output/entry32/ktask_cpuid.o(.text) }
+	.text : { ./output/entry32/ktask_life.o(.text) }	
+	.text : { ./output/entry32/life.o(.text) }	
+
+	.text : { ./output/entry32/mem_block.o(.text) }
+	.text : { ./output/entry32/mtok.o(.text) }
+	.text : { ./output/entry32/linked_list.o(.text) }
+	.text : { ./output/entry32/predicate.o(.text) }
+	.text : { ./output/entry32/crc.o(.text) }
+
+	.text : { ./output/entry32/cpuid.o(.text) }
+	.text : { ./output/entry32/cpuid_s.o(.text) }	
+	.text : { ./output/entry32/cpuid_print.o(.text) }
+
+	.data : { ./output/entry32/*.o(.data) }
+}
+
