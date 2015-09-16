@@ -25,7 +25,8 @@ extern "C" {
 
 #define MTOK_END 1
 
-int mtok(char *input,unsigned int *cur_pos,char *buf,unsigned int *buf_size,char *usep,char *jsep);
+//int mtok(char *input,unsigned int *cur_pos,char *buf,unsigned int *buf_size,char *usep,char *jsep);
+int mtok(char *input, int *cur_pos,char *buf, int *buf_size,char *usep,char *jsep);
 
 #ifdef __cplusplus
 }

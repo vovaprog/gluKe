@@ -279,3 +279,5 @@ int ints_are_on()
 	return 0;
 }
 
+//needed to link kernel on 64-bit machine
+void __stack_chk_fail(){}

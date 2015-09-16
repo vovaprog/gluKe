@@ -7,7 +7,8 @@ MYLIBI=$(MYLIB)/include
 MYLIBO=$(MYLIB)/output
 
 CINC=-I$(ifol) -I$(MYLIBI) -I$(sfol)/ktasks -I$(sfol)/drivers
-CFLAGS=$(CINC) -Wall
+CFLAGS=$(CINC) -Wall -m32
+ASFLAGS=--32
 OPTIM=-O2
 
 all: create_output_folder mylib $(ofol)/boot.bin $(ofol)/entry16.bin $(ofol)/entry32.bin $(sfol)/Makefile
@@ -30,7 +31,7 @@ $(ofol)/entry16.bin: $(sfol)/entry16.S $(ifol)/defs.h $(sfol)/Makefile
 
 $(ofol)/entry32.bin: $(sfol)/*.[sS]  $(sfol)/*.c $(ifol)/*.h $(MYLIB)/*.c $(MYLIBI)/*.h $(sfol)/Makefile \
                      $(sfol)/ktasks/* $(sfol)/drivers/*
-	as                        $(sfol)/entry32.s   -o $(ofol)/entry32/entry32_s.o
+	as     $(ASFLAGS)         $(sfol)/entry32.s   -o $(ofol)/entry32/entry32_s.o
 	gcc -c $(CFLAGS) $(OPTIM) $(sfol)/entry32.c   -o $(ofol)/entry32/entry32_c.o
 
 	gcc -c $(CFLAGS) $(OPTIM) $(sfol)/sys_utils.c -o $(ofol)/entry32/sys_utils.o
@@ -66,7 +67,7 @@ $(ofol)/entry32.bin: $(sfol)/*.[sS]  $(sfol)/*.c $(ifol)/*.h $(MYLIB)/*.c $(MYLI
 	
 	gcc -c $(CFLAGS) $(OPTIM) $(sfol)/ktasks/ktask_life.c -o $(ofol)/entry32/ktask_life.o
 
-	ld  --oformat binary -T ./entry32.lnk -o $(ofol)/entry32.bin
+	ld -melf_i386 --oformat binary -T ./entry32.lnk -o $(ofol)/entry32.bin
 
 create_output_folder:
 	mkdir -p ./output/entry32
@@ -75,7 +76,7 @@ mylib: cpuid mem_block linked_list mtok predicate crc life
 
 cpuid:
 	gcc -I. -I$(MYLIBI) -E $(MYLIB)/cpuid.S -o $(ofol)/entry32/cpuid_preprocessed.s
-	as $(ofol)/entry32/cpuid_preprocessed.s -o $(ofol)/entry32/cpuid_s.o
+	as $(ASFLAGS) $(ofol)/entry32/cpuid_preprocessed.s -o $(ofol)/entry32/cpuid_s.o
 	rm $(ofol)/entry32/cpuid_preprocessed.s
 	gcc -c -D GLUKE $(CFLAGS) $(MYLIB)/cpuid.c -o $(ofol)/entry32/cpuid.o
 	gcc -c -D GLUKE $(CFLAGS) $(MYLIB)/cpuid_print.c -o $(ofol)/entry32/cpuid_print.o
