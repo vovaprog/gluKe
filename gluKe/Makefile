@@ -10,7 +10,7 @@ CINC=-I$(ifol) -I$(MYLIBI) -I$(sfol)/ktasks -I$(sfol)/drivers
 CFLAGS=$(CINC) -Wall
 OPTIM=-O2
 
-all: mylib $(ofol)/boot.bin $(ofol)/entry16.bin $(ofol)/entry32.bin $(sfol)/Makefile
+all: create_output_folder mylib $(ofol)/boot.bin $(ofol)/entry16.bin $(ofol)/entry32.bin $(sfol)/Makefile
 	./build_utils/0patch_kernel.pl
 
 	cat $(ofol)/boot.bin > $(ofol)/gluKe.bin
@@ -68,6 +68,9 @@ $(ofol)/entry32.bin: $(sfol)/*.[sS]  $(sfol)/*.c $(ifol)/*.h $(MYLIB)/*.c $(MYLI
 
 	ld  --oformat binary -T ./entry32.lnk -o $(ofol)/entry32.bin
 
+create_output_folder:
+	mkdir -p ./output/entry32
+	
 mylib: cpuid mem_block linked_list mtok predicate crc life
 
 cpuid:
