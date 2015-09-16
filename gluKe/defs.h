@@ -101,8 +101,6 @@ starting lower fails.
 #define NOF_PAGES(x) (TO_PAGE_SIZE(x)/PAGE_SIZE)
 
 
-extern struct driver_descr drivers[];
-
 /*#ifndef ENTRY32_C
 extern void *GDT;
 #endif*/
@@ -149,6 +147,8 @@ struct driver_descr{
 	int (*close)(struct file *fl);
 	char *name;
 };
+
+extern struct driver_descr drivers[];
 
 extern unsigned int timer_cur_frequency;
 extern unsigned int timer_cur_mksec_per_tick;

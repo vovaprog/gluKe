@@ -212,7 +212,7 @@ char *brand_strings[]={
 
 			for(j=(i==0?1:0);j<4;j++)
 			{
-				switch(chp[j]){
+				switch((int)chp[j]){
 				case 0x00:s=0;break;
 				case 0x01:s="Instruction TLB: 4K-Byte Pages, 4-way set associative, 32 entries";break;
 				case 0x02:s="Instruction TLB: 4M-Byte Pages, 4-way set associative, 2 entries";break;

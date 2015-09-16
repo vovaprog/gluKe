@@ -33,7 +33,8 @@ static void* st_rgn_alloc_basic(int nof_bytes,int task_id)
 			if(j==MAX_NOF_ALS) return 0;
 
 			/* only now change values */
-			(unsigned int)free_als[i].base+=nof_pages*PAGE_SIZE;
+			//(unsigned int)free_als[i].base+=nof_pages*PAGE_SIZE;
+            free_als[i].base = (unsigned int)free_als[i].base + nof_pages*PAGE_SIZE;
 			free_als[i].nof_pages-=nof_pages;
 
 			reserved_als[j].base=base;
