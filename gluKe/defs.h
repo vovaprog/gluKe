@@ -136,10 +136,9 @@ struct handle{
 	int (*close)(struct handle *h);
 };
 
-typedef int (*driver_init_function)(struct driver_descr *d);
-
 struct driver_descr{
-	driver_init_function init_function;
+    int (*init_function)(struct driver_descr *d);
+	//driver_init_function init_function;
 	int (*open)(struct file *fl,char *s);
 	int (*read)(struct file *fl,char *buf,int bytes);
 	int (*write)(struct file *fl,char *buf,int bytes);
@@ -148,6 +147,7 @@ struct driver_descr{
 	char *name;
 };
 
+typedef int (*driver_init_function)(struct driver_descr *d);
 extern struct driver_descr drivers[];
 
 extern unsigned int timer_cur_frequency;

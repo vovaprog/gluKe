@@ -98,6 +98,8 @@ void work()
 work task started.\n\
 enter 'help' if you need help.\n");
 
+    all();
+
 loop:
 
 	if(read_line(kfile,"go>",buf,sizeof(buf))<0) kwr("'read_line' failed\n");
