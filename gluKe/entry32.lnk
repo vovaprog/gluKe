@@ -28,7 +28,6 @@ SECTIONS
 	.text : { ./output/entry32/mtok.o(.text) }
 	.text : { ./output/entry32/linked_list.o(.text) }
 	.text : { ./output/entry32/predicate.o(.text) }
-	.text : { ./output/entry32/crc.o(.text) }
 
 	.text : { ./output/entry32/cpuid.o(.text) }
 	.text : { ./output/entry32/cpuid_s.o(.text) }	

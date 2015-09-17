@@ -2,8 +2,6 @@
 
 #include <glinc.h>
 
-#include <crc.h>
-
 struct driver_descr drivers[]=
 {
 	{term_init_driver},
@@ -29,9 +27,6 @@ unsigned int RAM_SIZE;
 int kfile;
 
 void *GDT;
-
-/* without next line kernel is linked incorrect. Why? */
-char *__needed_for_linker__="\0";
 
 static int drv_init()
 {
@@ -81,16 +76,6 @@ void entry32()
 {
 	int i,first_task_id;
 	char itos_buf[ITOS_BSIZE];
-
-	/* kernel crc is counted starting with byte
-		after KERNEL_SIZE and KERNEL_CRC.
-		don't forget to change next line and crc utility, if you
-		want to add some variables there.
-		first instruction in entry32.s calls this function,
-		so kernel image in memory will not be changed and
-		nothing will affect computation of crc. */
-	if((i=crc_sum(KERNEL_CRC_BASE,KERNEL_CRC_BYTES))!=KERNEL_CRC)
-		die("kernel code loaded incorrectly");
 
 	RAM_SIZE=get_RAM_size();
 

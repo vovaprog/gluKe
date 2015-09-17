@@ -11,7 +11,8 @@ CFLAGS=$(CINC) -Wall -m32
 ASFLAGS=--32
 OPTIM=-O2
 
-all: create_output_folder mylib $(ofol)/boot.bin $(ofol)/entry16.bin $(ofol)/entry32.bin $(sfol)/Makefile
+.PHONY: all
+all: build_tools create_output_folder mylib $(ofol)/boot.bin $(ofol)/entry16.bin $(ofol)/entry32.bin $(sfol)/Makefile
 	./build_utils/0patch_kernel.pl
 
 	cat $(ofol)/boot.bin > $(ofol)/gluKe.bin
@@ -69,10 +70,13 @@ $(ofol)/entry32.bin: $(sfol)/*.[sS]  $(sfol)/*.c $(ifol)/*.h $(MYLIB)/*.c $(MYLI
 
 	ld -melf_i386 --oformat binary -T ./entry32.lnk -o $(ofol)/entry32.bin
 
+build_tools:
+	gcc ./build_utils/patcher.c -o ./build_utils/patcher
+	
 create_output_folder:
 	mkdir -p ./output/entry32
 	
-mylib: cpuid mem_block linked_list mtok predicate crc life
+mylib: cpuid mem_block linked_list mtok predicate life
 
 cpuid:
 	gcc -I. -I$(MYLIBI) -E $(MYLIB)/cpuid.S -o $(ofol)/entry32/cpuid_preprocessed.s
@@ -93,8 +97,8 @@ linked_list:
 predicate:
 	gcc -c $(CFLAGS) $(OPTIM) $(MYLIB)/predicate.c -o $(ofol)/entry32/predicate.o
 	
-crc:	
-	gcc -c $(CFLAGS) $(OPTIM) $(MYLIB)/crc.c -o $(ofol)/entry32/crc.o	
+#crc:	
+#	gcc -c $(CFLAGS) $(OPTIM) $(MYLIB)/crc.c -o $(ofol)/entry32/crc.o	
 	
 mtok:
 	gcc -c $(CFLAGS) $(OPTIM) $(MYLIB)/mtok.c -o $(ofol)/entry32/mtok.o	
